@@ -80,7 +80,6 @@ void printi(unsigned char* vec, size_t sz) {
 
             }
             printf("\n");
-            printf("\n");
             free(str);
         }
     }
@@ -160,7 +159,7 @@ void inversion(unsigned char* vec, size_t bits) {
         for (size_t i = 0; i < byts; i++) {
             vec[i] = ~vec[i];
         }
-        unsigned char k =  8 - (bits % 8);
+        unsigned char k = 8 - (bits % 8);
         if (k) {
             vec[byts - 1] = (vec[byts - 1] << k);
             vec[byts - 1] = (vec[byts - 1] >> k);
@@ -235,7 +234,8 @@ void shiftRight(unsigned char* vec, size_t bits, size_t k) {
 
 //7.1 Установка / сброс К - ого разряда;
 void set1(unsigned char* vec, size_t bits, size_t bit) {
-    if (vec && bits && bit) {
+    if (vec && bits) {
+        bit = bit % bits;
         if (bit < bits) {
             int mask = 1;
             mask = mask << (bit % 8);
@@ -246,7 +246,7 @@ void set1(unsigned char* vec, size_t bits, size_t bit) {
 
 //7.2 Установка / сброс К - ого разряда;
 void set0(unsigned char* vec, size_t bits, size_t bit) {
-    if (vec && bits && bit) {
+    if (vec && bits) {
         if (bit < bits) {
             int mask = 1;
             mask = mask << (bit % 8);
@@ -270,25 +270,27 @@ int main() {
     size_t set1_0 = 4;
     unsigned char* vektorRes = NULL;
 
-    ////
-    char str1[32] = "0000tr0werty000pf0000fgfgd000dg";//00001101 11110001 10000111 1100011
-    char str2[32] = "tr00trrughiros000rgd0grd0rdg0g0";
-    ////
-    //
-    //
-    //char str1[32] = "0000000000000000000000000000000";
-    //char str2[32] = "tr00trrughiros000rgd0grd0rdg0g0";
-    //
 
-    //
-    //char str1[32] = "rtrttr0wertyuiopf0000fgfgdfgfdg";
-    //char str2[32] = "0000000000000000000000000000000";
-    //
+    //    ////
+    //    char str1[32] = "0000tr0werty000pf0000fgfgd000dg";//00001101 11110001 10000111 1100011
+    //    char str2[32] = "tr00trrughiros000rgd0grd0rdg0g0";
+    //    ////
+        //
+        //
+        //char str1[32] = "0000000000000000000000000000000";
+        //char str2[32] = "tr00trrughiros000rgd0grd0rdg0g0";
+        //
 
-    //
-    //char str1[32] = "0000000000000000000000000000000";
-    //char str2[32] = "0000000000000000000000000000000";
-    //
+        //
+        //char str1[32] = "rtrttr0wertyuiopf0000fgfgdfgfdg";
+        //char str2[32] = "0000000000000000000000000000000";
+        //
+
+
+    char str1[101] = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+    char str2[32] = "0000000000000000000000000000000";
+
+
 
     ////
     //char str1[32] = "rtrttr0wertyuiopf0000fgfgdfgfdg";//11111101 11111111 10000111 91111111
@@ -309,72 +311,102 @@ int main() {
     printf("V1\n");
     vektor1 = convertStrToLongBv(str1, &len1);
     printi(vektor1, len1);
-
-    //V2
-    printf("V2\n");
-    vektor2 = convertStrToLongBv(str2, &len2);
-    printi(vektor2, len2);
-
-    lenRes = len1;
-
-    //&
-    printf("&\n");
-    vektorRes = logMul(vektor1, vektor2, len1, len2);
-    printi(vektorRes, lenRes);
-    if (vektorRes)
-    {
-        free(vektorRes);
+    for (int i = 0; str1[i] != '\0'; i++) {
+        set1(vektor1, len1, i);
+        printi(vektor1, len1);
     }
 
-    //|
-    printf("|\n");
-    vektorRes = logSum(vektor1, vektor2, len1, len2);
-    printi(vektorRes, lenRes);
-    if (vektorRes)
-    {
-        free(vektorRes);
+    //inversion(vektor1, len1);
+    //printi(vektor1, len1);
+
+    /*for (int i = 0; str1[i] != '\0'; i++) {
+        set0(vektor1, len1, i);
+        printi(vektor1, len1);
+    }*/
+    //for (int i = 0; str1[i] != '\0'; i++) {
+    //    set0(vektor1, len1, i);
+    //    printi(vektor1, len1);
+    //}
+    
+
+    for (int i = 0; str1[i] != '\0'; i++) {
+        shiftRight(vektor1, len1, 1);
+        printi(vektor1, len1);
     }
 
-    //^
-    printf("^\n");
-    vektorRes = sumMod2(vektor1, vektor2, len1, len2);
-    printi(vektorRes, lenRes);
-    if (vektorRes)
-    {
-        free(vektorRes);
-    }
 
-    //~
-    printf("~\n");
-    inversion(vektor1, len1);
-    printi(vektor1, len1);
+    //    for(int i =0; str1[i] !='\0';i++ ){
+    //        set0(vektor1,len1,i );
+    //        printi(vektor1, len1);
+    //    }
 
-    printf("~\n");
-    inversion(vektor1, len1);
-    printi(vektor1, len1);
 
-    //<<
-    printf("<<\n");
-    shiftLeft(vektor1, len1, k);
-    printi(vektor1, len1);
 
-    //>>
-    printf(">>\n");
-    shiftRight(vektor1, len1, k);
-    printi(vektor1, len1);
+    //    //V2
+    //    printf("V2\n");
+    //    vektor2 = convertStrToLongBv(str2, &len2);
+    //    printi(vektor2, len2);
 
-    //1
-    printf("1\n");
-    set1(vektor1, len1, set1_0);
-    printi(vektor1, len1);
+    //    lenRes = len1;
 
-    //0
-    printf("0\n");
-    set0(vektor1, len1, set1_0);
-    printi(vektor1, len1);
+    //    //&
+    //    printf("&\n");
+    //    vektorRes = logMul(vektor1, vektor2, len1, len2);
+    //    printi(vektorRes, lenRes);
+    //    if (vektorRes)
+    //    {
+    //        free(vektorRes);
+    //    }
+
+    //    //|
+    //    printf("|\n");
+    //    vektorRes = logSum(vektor1, vektor2, len1, len2);
+    //    printi(vektorRes, lenRes);
+    //    if (vektorRes)
+    //    {
+    //        free(vektorRes);
+    //    }
+
+    //    //^
+    //    printf("^\n");
+    //    vektorRes = sumMod2(vektor1, vektor2, len1, len2);
+    //    printi(vektorRes, lenRes);
+    //    if (vektorRes)
+    //    {
+    //        free(vektorRes);
+    //    }
+
+    //    //~
+    //    printf("~\n");
+    //    inversion(vektor1, len1);
+    //    printi(vektor1, len1);
+
+    //    printf("~\n");
+    //    inversion(vektor1, len1);
+    //    printi(vektor1, len1);
+
+    //    //<<
+    //    printf("<<\n");
+    //    shiftLeft(vektor1, len1, k);
+    //    printi(vektor1, len1);
+
+    //    //>>
+    //    printf(">>\n");
+    //    shiftRight(vektor1, len1, k);
+    //    printi(vektor1, len1);
+
+    //    //1
+    //    printf("1\n");
+    //    set1(vektor1, len1, set1_0);
+    //    printi(vektor1, len1);
+
+    //    //0
+    //    printf("0\n");
+    //    set0(vektor1, len1, set1_0);
+    //    printi(vektor1, len1);
 
     free(vektor1);
-    free(vektor2);
+    //free(vektor2);
 
 
     return 0;
