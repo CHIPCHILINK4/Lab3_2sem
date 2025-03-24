@@ -160,6 +160,12 @@ void inversion(unsigned char* vec, size_t bits) {
         for (size_t i = 0; i < byts; i++) {
             vec[i] = ~vec[i];
         }
+        unsigned char k =  8 - (bits % 8);
+        if (k) {
+            vec[byts - 1] = (vec[byts - 1] << k);
+            vec[byts - 1] = (vec[byts - 1] >> k);
+
+        }
     }
 }
 
@@ -373,4 +379,4 @@ int main() {
 
     return 0;
 }
-//векторы одинаковой длинны не обрезай не дополняй и смещение просто с отбрасыванием
+//векторы одинаковой длинны yt не обрезай не дополняй и смещение просто с отбрасыванием
