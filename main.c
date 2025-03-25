@@ -181,8 +181,7 @@ void shiftLeft(unsigned char* vec, size_t bits, size_t k) {
             }
         }
         else {
-            if (byte)
-            {
+            if (byte) {
                 for (size_t i = 0; i < (byts); i++) {
                     vec[i] = vec[i + byte];
                     if (i > byte + 1) {
@@ -213,8 +212,7 @@ void shiftRight(unsigned char* vec, size_t bits, size_t k) {
             }
         }
         else {
-            if (byte)
-            {
+            if (byte) {
                 for (size_t i = byts - 1; i > 0; i--) {
                     vec[i] = vec[i - byte];
                     if (i <= byte) {
@@ -222,11 +220,11 @@ void shiftRight(unsigned char* vec, size_t bits, size_t k) {
                     }
                 }
             }
-            for (size_t i = 1; i < byts - 1; i++) {
-                tmp = vec[i] << bit;
+            for (size_t i = byts - 1; i > 0; i--) {
+                tmp = (vec[i] << bit);
                 vec[i] = tmp | (vec[i - 1] >> (8 - bit));
-
             }
+            
             vec[0] = vec[0] << (bit);
         }
     }
@@ -272,7 +270,7 @@ int main() {
 
 
     //    ////
-    //    char str1[32] = "0000tr0werty000pf0000fgfgd000dg";//00001101 11110001 10000111 1100011
+        //char str1[32] = "0000tr0werty000pf0000fgfgd000dg";//00001101 11110001 10000111 1100011
     //    char str2[32] = "tr00trrughiros000rgd0grd0rdg0g0";
     //    ////
         //
@@ -288,7 +286,7 @@ int main() {
 
 
     char str1[101] = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-    char str2[32] = "0000000000000000000000000000000";
+    //char str2[32] = "0000000000000000000000000000000";
 
 
 
@@ -311,31 +309,57 @@ int main() {
     printf("V1\n");
     vektor1 = convertStrToLongBv(str1, &len1);
     printi(vektor1, len1);
-    for (int i = 0; str1[i] != '\0'; i++) {
+
+
+    printf("1\n");
+    printi(vektor1, len1);
+    for (int i = 0; i < len1; i++) {
         set1(vektor1, len1, i);
         printi(vektor1, len1);
     }
 
-    //inversion(vektor1, len1);
-    //printi(vektor1, len1);
+    printf("~\n");
+    inversion(vektor1, len1);
+    printi(vektor1, len1);
 
-    /*for (int i = 0; str1[i] != '\0'; i++) {
+    printf("~\n");
+    inversion(vektor1, len1);
+    printi(vektor1, len1);
+
+
+    printf("0\n");
+    printi(vektor1, len1);
+    for (int i = 0; i < len1; i++) {
         set0(vektor1, len1, i);
-        printi(vektor1, len1);
-    }*/
-    //for (int i = 0; str1[i] != '\0'; i++) {
-    //    set0(vektor1, len1, i);
-    //    printi(vektor1, len1);
-    //}
-    
-
-    for (int i = 0; str1[i] != '\0'; i++) {
-        shiftRight(vektor1, len1, 1);
         printi(vektor1, len1);
     }
 
 
-    //    for(int i =0; str1[i] !='\0';i++ ){
+    //for (int i = 0; i < len1; i++) {
+    //    set0(vektor1, len1, i);
+    //    printi(vektor1, len1);
+    //}
+
+    printf(">>\n");
+    vektor1[0] = 1;
+    printi(vektor1, len1);
+    for (int i = 0; i < len1; i++) {
+        shiftRight(vektor1, len1, 1);
+        printi(vektor1, len1);
+    }
+
+    printf("<<\n");
+    vektor1[((len1 + 7) / 8) - 1] = 1 << 3;
+    printi(vektor1, len1);
+    for (int i = 0; i < len1; i++) {
+        shiftLeft(vektor1, len1, 1);
+        printi(vektor1, len1);
+    }
+
+   
+
+
+    //    for(int i =0;i < len1;i++ ){
     //        set0(vektor1,len1,i );
     //        printi(vektor1, len1);
     //    }
